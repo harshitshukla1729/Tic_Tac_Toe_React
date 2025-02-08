@@ -8,6 +8,7 @@ function App() {
   const [state, setState] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState('X');
   const [winner, setWinner] = useState(null);
+  const [gameOver,setGameOver] = useState(false);
 
   function checkWinner(stateCopy) {
     const wins = [
@@ -18,7 +19,7 @@ function App() {
       [1, 4, 7],
       [2, 5, 8],
       [0, 4, 8],
-      [2, 5, 8],
+      [2, 4, 6],
     ];
 
     for (let win of wins) {
@@ -52,6 +53,18 @@ function App() {
     if (win) {
       setWinner(turn);
       console.log(`Winner is ${turn}`);
+      // return;
+    }
+
+    let cnt = stateCopy.reduce((acc,block) => {
+      if(block === null)
+        acc = acc+1;
+      return acc;
+    },0)
+
+    if(cnt == 0)
+    {
+      setGameOver(true);
     }
 
     setState(stateCopy);
@@ -84,7 +97,8 @@ function App() {
         </div>
       </div>
       {winner && <h1>Winner is :- {winner} </h1>}
-      {winner && <button className='restart-btn' onClick={handleRestart}>Restart</button>}
+      {(!winner && gameOver) && <h1>Game Over!!</h1>}
+      {(winner || gameOver) && <button className='restart-btn' onClick={handleRestart}>Restart</button>}
     </>
   );
 }
