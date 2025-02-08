@@ -74,6 +74,7 @@ function App() {
     setState(Array(9).fill(null));
     setTurn('X');
     setWinner(null);
+    setGameOver(false);
   }
 
   return (
